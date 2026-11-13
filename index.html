@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#080b18">
+    <title>StudentHub | Management Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+    <div class="background-effects">
+        <div class="orb orb-one"></div>
+        <div class="orb orb-two"></div>
+        <div class="orb orb-three"></div>
+        <div class="grid-overlay"></div>
+    </div>
+
+    <header class="topbar">
+        <a href="#" class="brand">
+            <span class="brand-icon">S</span>
+            <span>Student<span class="brand-highlight">Hub</span></span>
+        </a>
+
+        <nav>
+            <a href="#overview">Overview</a>
+            <a href="#register">Register</a>
+            <a href="#directory">Students</a>
+        </nav>
+
+        <div class="system-status">
+            <span class="status-dot"></span>
+            System dashboard
+        </div>
+    </header>
+
+    <main class="container">
+
+        <!-- HERO -->
+        <section class="hero reveal" id="overview">
+            <div class="hero-content">
+                <span class="eyebrow">
+                    <span class="live-dot"></span>
+                    STUDENT MANAGEMENT PLATFORM
+                </span>
+
+                <h1>
+                    Manage smarter.<br>
+                    <span class="gradient-text">Grow together.</span>
+                </h1>
+
+                <p>
+                    A simple and powerful space to create, organize,
+                    update and manage your student records.
+                </p>
+
+                <a href="#register" class="hero-button">
+                    Get started <span>↗</span>
+                </a>
+            </div>
+
+            <div class="hero-visual">
+                <div class="orbit orbit-a"></div>
+                <div class="orbit orbit-b"></div>
+
+                <div class="hero-symbol">
+                    <div class="symbol-inner">S</div>
+                    <span class="floating-chip chip-one">✦ CREATE</span>
+                    <span class="floating-chip chip-two">↻ UPDATE</span>
+                    <span class="floating-chip chip-three">⌕ READ</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- STATISTICS -->
+        <section class="stats-grid reveal">
+            <article class="stat-card">
+                <div class="stat-icon purple-icon">♙</div>
+                <span class="stat-label">Total Students</span>
+                <strong id="totalStudents">0</strong>
+                <small>Registered student records</small>
+            </article>
+
+            <article class="stat-card">
+                <div class="stat-icon cyan-icon">▤</div>
+                <span class="stat-label">Courses</span>
+                <strong id="totalCourses">0</strong>
+                <small>Unique courses listed</small>
+            </article>
+
+            <article class="stat-card">
+                <div class="stat-icon green-icon">✓</div>
+                <span class="stat-label">System Status</span>
+                <strong class="status-value">Active</strong>
+                <small>Dashboard is ready</small>
+            </article>
+        </section>
+
+        <!-- REGISTER STUDENT -->
+        <section class="section-block reveal" id="register">
+            <div class="section-heading">
+                <div>
+                    <span class="section-kicker">GET STARTED</span>
+                    <h2>Register a student</h2>
+                    <p>Add a new student to your directory.</p>
+                </div>
+                <span class="section-number">01 / CREATE</span>
+            </div>
+
+            <div class="form-panel">
+                <div class="form-decoration">
+                    <span class="decoration-circle">+</span>
+                    <h3>New student entry</h3>
+                    <p>Enter the details below to create a student record.</p>
+                </div>
+
+                <form id="studentForm">
+                    <div class="field">
+                        <label for="name">Student name</label>
+                        <input type="text" id="name"
+                               placeholder="Enter full name" required>
+                    </div>
+
+                    <div class="field">
+                        <label for="age">Age</label>
+                        <input type="number" id="age"
+                               placeholder="Enter age" min="1" required>
+                    </div>
+
+                    <div class="field">
+                        <label for="course">Course</label>
+                        <input type="text" id="course"
+                               placeholder="e.g. Python Full Stack" required>
+                    </div>
+
+                    <button type="submit" class="primary-button">
+                        <span>＋</span> Add student
+                    </button>
+                </form>
+            </div>
+        </section>
+
+        <!-- DIRECTORY -->
+        <section class="section-block reveal" id="directory">
+            <div class="section-heading directory-heading">
+                <div>
+                    <span class="section-kicker">YOUR RECORDS</span>
+                    <h2>Student directory</h2>
+                    <p>View and manage your registered students.</p>
+                </div>
+                <span class="section-number">02 / MANAGE</span>
+            </div>
+
+            <div class="directory-toolbar">
+                <div class="search-box">
+                    <span>⌕</span>
+                    <input type="search" id="searchInput"
+                           placeholder="Search by name, ID or course...">
+                </div>
+
+                <span class="record-count">
+                    <span class="live-dot"></span>
+                    <span id="recordCount">0 records</span>
+                </span>
+            </div>
+
+            <div id="studentList" class="student-grid">
+                <div class="empty-state">Loading student records...</div>
+            </div>
+        </section>
+
+        <!-- CRUD INFORMATION -->
+        <section class="section-block reveal">
+            <div class="section-heading">
+                <div>
+                    <span class="section-kicker">CORE FEATURES</span>
+                    <h2>Everything in four actions</h2>
+                    <p>Your project is built around the four CRUD operations.</p>
+                </div>
+            </div>
+
+            <div class="feature-grid">
+                <article class="feature-card">
+                    <span class="feature-icon">＋</span>
+                    <h3>Create</h3>
+                    <p>Add new student information to your records.</p>
+                    <span class="feature-tag">POST</span>
+                </article>
+
+                <article class="feature-card">
+                    <span class="feature-icon">⌕</span>
+                    <h3>Read</h3>
+                    <p>View and search the student directory.</p>
+                    <span class="feature-tag">GET</span>
+                </article>
+
+                <article class="feature-card">
+                    <span class="feature-icon">↻</span>
+                    <h3>Update</h3>
+                    <p>Modify existing student information.</p>
+                    <span class="feature-tag">PUT</span>
+                </article>
+
+                <article class="feature-card">
+                    <span class="feature-icon">×</span>
+                    <h3>Delete</h3>
+                    <p>Remove student records when required.</p>
+                    <span class="feature-tag">DELETE</span>
+                </article>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="footer">
+        <a href="#" class="brand footer-brand">
+            <span class="brand-icon">S</span>
+            <span>Student<span class="brand-highlight">Hub</span></span>
+        </a>
+
+        <p>Simple records. Smarter management.</p>
+        <span>Built with HTML · CSS · JavaScript · Python</span>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
