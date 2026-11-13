@@ -1,6 +1,8 @@
 from http.server import HTTPServer, BaseHTTPRequestHandler
 import json
+import os
 
+# Temporary student storage
 students = []
 next_id = 1
 
@@ -14,7 +16,10 @@ class StudentServer(BaseHTTPRequestHandler):
         self.send_response(status)
         self.send_header("Content-Type", "application/json")
         self.send_header("Access-Control-Allow-Origin", "*")
-        self.send_header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS")
+        self.send_header(
+            "Access-Control-Allow-Methods",
+            "GET, POST, PUT, DELETE, OPTIONS"
+        )
         self.send_header("Access-Control-Allow-Headers", "Content-Type")
         self.end_headers()
 
@@ -24,7 +29,10 @@ class StudentServer(BaseHTTPRequestHandler):
     def do_OPTIONS(self):
         self.send_response(204)
         self.send_header("Access-Control-Allow-Origin", "*")
-        self.send_header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS")
+        self.send_header(
+            "Access-Control-Allow-Methods",
+            "GET, POST, PUT, DELETE, OPTIONS"
+        )
         self.send_header("Access-Control-Allow-Headers", "Content-Type")
         self.end_headers()
 
@@ -43,14 +51,23 @@ class StudentServer(BaseHTTPRequestHandler):
             return
 
         try:
-            student = self.read_data()
+            student_data = self.read_data()
 
-            name = student.get("name", "").strip()
-            course = student.get("course", "").strip()
-            age = student.get("age")
+            name = student_data.get("name", "").strip()
+            course = student_data.get("course", "").strip()
+            age = student_data.get("age")
 
-            if not name or not course or not isinstance(age, int) or isinstance(age, bool) or age <= 0:
-                self.send_json(400, {"message": "Enter valid student details"})
+            if (
+                not name
+                or not course
+                or not isinstance(age, int)
+                or isinstance(age, bool)
+                or age <= 0
+            ):
+                self.send_json(
+                    400,
+                    {"message": "Enter valid student details"}
+                )
                 return
 
             student = {
@@ -60,8 +77,8 @@ class StudentServer(BaseHTTPRequestHandler):
                 "course": course
             }
 
-            next_id += 1
             students.append(student)
+            next_id += 1
 
             self.send_json(201, {
                 "message": "Student added successfully!",
@@ -87,12 +104,27 @@ class StudentServer(BaseHTTPRequestHandler):
             for student in students:
                 if student["id"] == student_id:
 
-                    name = updated_data.get("name", student["name"]).strip()
-                    course = updated_data.get("course", student["course"]).strip()
+                    name = updated_data.get(
+                        "name", student["name"]
+                    ).strip()
+
+                    course = updated_data.get(
+                        "course", student["course"]
+                    ).strip()
+
                     age = updated_data.get("age", student["age"])
 
-                    if not name or not course or not isinstance(age, int) or isinstance(age, bool) or age <= 0:
-                        self.send_json(400, {"message": "Enter valid details"})
+                    if (
+                        not name
+                        or not course
+                        or not isinstance(age, int)
+                        or isinstance(age, bool)
+                        or age <= 0
+                    ):
+                        self.send_json(
+                            400,
+                            {"message": "Enter valid details"}
+                        )
                         return
 
                     student.update({
@@ -119,6 +151,7 @@ class StudentServer(BaseHTTPRequestHandler):
 
             for student in students:
                 if student["id"] == student_id:
+
                     students.remove(student)
 
                     self.send_json(200, {
@@ -131,9 +164,19 @@ class StudentServer(BaseHTTPRequestHandler):
         except ValueError:
             self.send_json(400, {"message": "Invalid student ID"})
 
+    # Log requests
+    def log_message(self, format, *args):
+        print(format % args)
 
-server = HTTPServer(("127.0.0.1", 8000), StudentServer)
 
-print("Student Management Server running at http://127.0.0.1:8000")
+# RENDER SERVER CONFIGURATION
+PORT = int(os.environ.get("PORT", 8000))
+
+server = HTTPServer(
+    ("0.0.0.0", PORT),
+    StudentServer
+)
+
+print(f"Student Management Server running on port {PORT}")
 
 server.serve_forever()
